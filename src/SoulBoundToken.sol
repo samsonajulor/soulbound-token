@@ -22,6 +22,7 @@ contract SoulBoundToken is ERC1155, Ownable {
     error CannotCreateMainToken();
     error ItemAlreadyExists(uint256 itemId);
     error InsufficientBalanceForTransfer();
+    error CannotTransferMainToken();
 
     constructor() ERC1155("https://abcoathup.github.io/SampleERC1155/api/token/{id}.json") {
         _mint(msg.sender, MAIN_TOKEN_ID, 1, "");
@@ -64,7 +65,7 @@ contract SoulBoundToken is ERC1155, Ownable {
         bytes memory data
     ) external onlySoulbound {
         if (itemId == MAIN_TOKEN_ID)
-            revert CannotCreateMainToken();
+            revert CannotTransferMainToken();
 
         if (balanceOf(from, itemId) < amount)
             revert InsufficientBalanceForTransfer();

@@ -46,3 +46,6 @@ This contract is licensed under the MIT License. See the [LICENSE](LICENSE) file
 - run `forge install` to install deps
 - run `forge build` to build the application
 - run `forge test` to run the tests.
+
+This Contract is deployed to base @ 0x7d3DE2385CbCe0Bc4031cBD30F4CB0daf843A6a6
+tx-hash 0x49410b2d0e3a77b4dfbb9216ab4beba90c0c34162ed17ef30342bad6ebc57237

@@ -103,4 +103,16 @@ contract SoulBoundTokenTest is Test {
         vm.expectRevert(SoulBoundToken.AlreadySoulbound.selector);
         soulBoundTokenContract.obtainSoulboundMainToken();
     }
+
+    function testCannotCreateMainToken() public {
+        switchSigner(_wallet2);
+        vm.expectRevert(SoulBoundToken.CannotCreateMainToken.selector);
+        soulBoundTokenContract.createItemToken(MAIN_TOKEN_ID, 1);
+    }
+
+    function testCannotTransferMainToken() public {
+        switchSigner(_wallet2);
+        vm.expectRevert(SoulBoundToken.CannotTransferMainToken.selector);
+        soulBoundTokenContract.safeTransferItemToken(_wallet, _wallet2, MAIN_TOKEN_ID, 1, "");
+    }
 }
