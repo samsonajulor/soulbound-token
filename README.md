@@ -1,66 +1,18 @@
-## Foundry
-
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
-
-Foundry consists of:
-
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
-
-## Documentation
-
-https://book.getfoundry.sh/
-
-## Usage
-
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+Smart Contracts Development Challenge
+(Blockchain):
+Challenge Description:
+Your task is to develop a smart contract on a testnet (e.g., Sepolia) that enforces a unique
+ownership rule. The smart contract should create an ERC1155 token where wallet owners
+can possess one of the main token of the smart contract, and this main token is soulbound.
+Additionally, create many item tokens that can only be transacted between wallets that
+possess the soulbound main token. To better understand you can consider a game context
+where the main token represents a character, and item tokens are accessories or items
+related to the character. Your solution should demonstrate a understanding of blockchain
+development and token standards.
+Requirements:
+1. Develop an ERC1155 smart contract on a testnet (e.g., Sepolia).
+2. Implement logic that allows each wallet to own only one soulbound main token.
+3. Design item tokens that can only be transacted between wallets with the soulbound
+main token.
+4. Provide thorough documentation on the contract&#39;s functionality, deployment, and
+usage.
