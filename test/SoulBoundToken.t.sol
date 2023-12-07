@@ -14,7 +14,12 @@ interface IERC1155Receiver {
     ) external returns (bytes4);
 }
 
-contract TestWallet is IERC1155Receiver {
+contract ForwarderERC1155Receiver is IERC1155Receiver {
+    address public target;
+
+    constructor(address _target) {
+        target = _target;
+    }
 
     function onERC1155Received(
         address operator,
@@ -22,16 +27,26 @@ contract TestWallet is IERC1155Receiver {
         uint256 id,
         uint256 value,
         bytes calldata data
-    ) external returns (bytes4) {
+    ) external override returns (bytes4) {
+        return IERC1155Receiver(target).onERC1155Received(operator, from, id, value, data);
+    }
+}
 
-        console2.log("TestWallet: onERC1155Received");
-        return IERC1155Receiver(0x0000000000000000000000000000000000000000).onERC1155Received(
-            operator,
-            from,
-            id,
-            value,
-            data
-        );
+contract ForwarderERC1155Receiver2 is IERC1155Receiver {
+    address public target;
+
+    constructor(address _target) {
+        target = _target;
+    }
+
+    function onERC1155Received(
+        address operator,
+        address from,
+        uint256 id,
+        uint256 value,
+        bytes calldata data
+    ) external override returns (bytes4) {
+        return IERC1155Receiver(target).onERC1155Received(operator, from, id, value, data);
     }
 }
 
@@ -54,15 +69,25 @@ contract SoulBoundTokenTest is Test {
     }
 
     SoulBoundToken public soulBoundTokenContract;
+    address _user = address(0x11111);
+    address _user2 = address(0x22222);
 
-    address _wallet = address(new TestWallet());
+    address _wallet = address(new ForwarderERC1155Receiver(_user));
+
+    address _wallet2 = address(new ForwarderERC1155Receiver2(_user2));
 
     uint256 _privKeyA;
 
     function setUp() public {
         (_wallet, _privKeyA) = mkaddr("WALLET");
 
+        (_wallet2, _privKeyA) = mkaddr("WALLET2");
+
+        switchSigner(_wallet2);
+
         soulBoundTokenContract = new SoulBoundToken();
+
+        vm.stopPrank();
     }
 
     function testObtainSoulBoundToken() public {
@@ -70,5 +95,12 @@ contract SoulBoundTokenTest is Test {
         soulBoundTokenContract.obtainSoulboundMainToken();
 
         assertEq(soulBoundTokenContract.balanceOf(_wallet, MAIN_TOKEN_ID), 1);
+    }
+
+    function testWalletCannotObtainSoulBoundToken() public {
+        switchSigner(_wallet2);
+
+        vm.expectRevert(SoulBoundToken.AlreadySoulbound.selector);
+        soulBoundTokenContract.obtainSoulboundMainToken();
     }
 }

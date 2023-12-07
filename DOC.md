@@ -39,3 +39,10 @@ Make sure to replace the path with the actual location of the `SoulBoundToken.so
 ## License
 
 This contract is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+
+# How to Install
+- clone this repository `git clone <repo url>`
+- run `forge install` to install deps
+- run `forge build` to build the application
+- run `forge test` to run the tests.
